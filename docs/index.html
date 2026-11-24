@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agentloft</title>
+<meta name="description" content="A live 3D office that shows your Claude Code sessions and agents at work. Local and open source.">
+<meta property="og:title" content="Agentloft"><meta property="og:description" content="A live 3D office for your Claude Code sessions and agents."><meta property="og:image" content="https://edensitko.github.io/agentloft/images/v-hero-en.jpg">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&family=Cairo:wght@400;600;800&family=Secular+One&display=swap">
+<style>
+:root{--ink:#16202b;--soft:#43525f;--plate:#12151c;--wait:#ff9a3d;--work:#37d293;--idle:#a9b0f0}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:#b9d7ec}body{margin:0;color:var(--ink);font:400 18px/1.6 Rubik,Cairo,system-ui,sans-serif;overflow-x:clip}
+[lang=ru] h1,[lang=ru] h2,[lang=ar] h1,[lang=ar] h2{font-family:Cairo,Rubik,system-ui,sans-serif!important;font-weight:800;line-height:1.25}h1,h2,.time,.logo{font-family:"Secular One",Rubik,system-ui,sans-serif;font-weight:400;margin:0;text-wrap:balance}
+h1{font-size:clamp(44px,8vw,108px);line-height:1}h2{font-size:clamp(32px,4.6vw,60px);line-height:1.06}p{margin:0;text-wrap:pretty}img{display:block;width:100%;height:auto}a{color:inherit}
+.wrap{width:min(1240px,100% - 40px);margin-inline:auto}:focus-visible{outline:3px solid #1d4fd8;outline-offset:3px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 0}.logo{font-size:21px}nav div{display:flex;gap:18px;align-items:center}nav a{text-decoration:none}nav a:hover{text-decoration:underline}nav select{font:inherit;color:inherit;background:#ffffff66;border:0;border-radius:99px;padding:6px 16px;cursor:pointer}
+.sky{background:linear-gradient(#b9d7ec,#dcebf3 62%,#eef3f2)}
+.hero{padding:clamp(28px,5vw,64px) 0 0;text-align:center}.hero h1{max-width:13ch;margin-inline:auto}.hero p{font-size:clamp(18px,1.7vw,22px);max-width:54ch;margin:22px auto 0;color:var(--soft)}
+.go{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:28px 0 0}.btn{display:inline-block;border:0;cursor:pointer;font:500 18px/1.2 Rubik,system-ui,sans-serif;text-decoration:none;background:var(--plate);color:#fff;border-radius:12px;padding:15px 26px}.btn:hover{background:#2b3342}.btn.alt{background:#ffffff8c;color:var(--ink)}.btn.alt:hover{background:#fff}
+.demo{margin-top:clamp(32px,4vw,56px)}.frame{position:relative;border-radius:22px;overflow:hidden;background:#222a36;aspect-ratio:16/10;max-height:82vh;width:100%;box-shadow:0 2px 0 #fff9,0 40px 80px -30px #1b324a80}.frame img,.frame iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}.frame .start{position:absolute;inset:auto 0 0;display:grid;justify-items:center;gap:8px;padding:120px 20px 34px;background:linear-gradient(#0e162000,#0e1620d9);color:#fff;font-size:15px}.frame .start .btn{background:#fff;color:var(--ink);font-size:20px;padding:17px 30px}.frame .start .btn:hover{background:#e8eef4}
+.pick{display:flex;gap:8px;overflow-x:auto;padding:16px 2px 4px;justify-content:safe center;scrollbar-width:thin}.pick button{flex:none;font:500 16px/1.2 Rubik,system-ui,sans-serif;color:var(--ink);background:#ffffff80;border:0;border-radius:99px;padding:10px 18px;cursor:pointer}.pick button:hover{background:#fff}.pick [aria-pressed=true]{background:var(--plate);color:#fff}
+.hour{padding:clamp(56px,6.5vw,96px) 0}.time{font-size:clamp(20px,2vw,26px);font-variant-numeric:tabular-nums;opacity:.62;margin-bottom:10px}.hour p.say{margin-top:18px;font-size:19px;max-width:46ch;opacity:.86}
+.dusk{background:linear-gradient(#f8cf9e,#e58a63 55%,#8a4f72);color:#2a1218;padding-bottom:0}.night{background:linear-gradient(#8a4f72,#1b1a38 34%,#0c0e1c);color:#eceefb}
+
+
+.beach{margin-top:clamp(40px,6vw,80px)}.beach img{border-radius:22px 22px 0 0}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,56px);margin-top:44px}.facts b{display:block;font-weight:600;font-size:20px;margin-bottom:6px}.facts span{color:#b9bedb}.nightpic{margin-top:64px;border-radius:22px;overflow:hidden}
+.install{text-align:center;padding:clamp(56px,7vw,96px) 0 20px}pre{direction:ltr;text-align:left;background:#ffffff12;border-radius:16px;padding:24px 28px;overflow:auto;font:16px/1.9 ui-monospace,Menlo,monospace;margin:30px auto 18px;width:min(680px,100%)}.small{font-size:16px;color:#b9bedb;max-width:62ch;margin-inline:auto}.night .btn{background:#fff;color:var(--ink)}.night .btn:hover{background:#dfe3f5}
+footer{padding:40px 0;font-size:15px;color:#9ba1c2;text-align:center}
+@media(max-width:820px){.grid,.facts{grid-template-columns:1fr}.frame{aspect-ratio:4/5;border-radius:16px}.hour{padding:72px 0}nav a.gh{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.sky,.hour{position:relative;isolation:isolate;overflow:clip}
+#stars{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.clock{position:fixed;z-index:9;inset-block-end:18px;inset-inline-start:18px;display:flex;gap:9px;align-items:center;background:#12151ce0;color:#fff;border-radius:99px;padding:7px 15px 7px 11px;font:500 16px/1.3 Rubik,system-ui,sans-serif;font-variant-numeric:tabular-nums;direction:ltr}.clock i{width:16px;height:16px;border-radius:50%;background:var(--orb,#ffd76a)}
+h1 .w{display:inline-block;white-space:nowrap}h1.still .c{animation:none!important}h1 .c{display:inline-block;animation:rise .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i)*22ms)}@keyframes rise{from{opacity:0;filter:blur(10px);transform:translateY(.35em)}}
+.frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.sr{position:absolute!important;width:1px!important;height:1px!important;opacity:0}
+.btn.glow{position:relative;isolation:isolate}.btn.glow::before{content:"";position:absolute;inset:-3px;border-radius:15px;z-index:-1;background:conic-gradient(from var(--a),#ffffff00 0 62%,#ffb45e 78%,#fff 84%,#ffffff00 92%);animation:turn 4s linear infinite}.btn.glow::after{content:"";position:absolute;inset:0;border-radius:12px;background:inherit;z-index:-1}@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}@keyframes turn{to{--a:360deg}}
+
+.clip{margin:0;border-radius:20px;overflow:hidden;background:#222a36}.clip video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}.clip.wide{margin-top:44px}.clip.full{border-radius:0;margin-top:clamp(40px,6vw,80px)}.clip.full video{aspect-ratio:21/9}.tilt{transition:transform .25s ease-out;transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}.clip.full{transform:none}
+
+
+.dusk{background:linear-gradient(#f3f1e9,#f5c99a 26%,#ef9a68 62%,#8a4f72)}
+.steps{list-style:none;counter-reset:n;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:0;margin:40px auto 24px;width:min(760px,100%);text-align:start}.steps li{counter-increment:n;background:#ffffff0f;border-radius:18px;padding:20px 24px}.steps b{font-weight:600;font-size:20px}.steps b::before{content:counter(n) ". "}.steps p{color:#b9bedb;margin-top:6px}.cmd{direction:ltr;display:flex;gap:12px;align-items:center;margin-top:10px}.cmd code{flex:1;min-width:0;overflow:auto;white-space:nowrap;font:16px/1.7 ui-monospace,Menlo,monospace;color:#dfe4ff}.copy{flex:none;font:500 15px Rubik,system-ui,sans-serif;background:#ffffff1f;color:#fff;border:0;border-radius:9px;padding:8px 14px;cursor:pointer}.copy:hover{background:#ffffff38}
+.faq{width:min(760px,100%);margin:40px auto 0}.faq h2{font-size:clamp(28px,3vw,40px);margin-bottom:18px}.faq details{border-bottom:1px solid #ffffff24;padding:16px 0}.faq summary{cursor:pointer;font-weight:500;font-size:19px}.faq p{color:#b9bedb;margin-top:8px}
+@media(max-width:820px){.grid,.grid.flip{grid-template-columns:1fr}.clip.full video{aspect-ratio:4/3}.cmd{flex-wrap:wrap}.cmd code{flex-basis:100%}}
+@media(prefers-reduced-motion:reduce){h1 .c,.btn.glow::before{animation:none}.tilt{transform:none}}
+
+.hero{padding-bottom:0;position:relative;z-index:2}.hero h1{max-width:none;font-size:clamp(42px,7.2vw,104px)}.sky{background:linear-gradient(#a9cfe9,#d3e6f1 46%,#eef3f2)}
+.demo{margin-top:clamp(-20px,-1vw,0px);position:relative;z-index:1}.frame{border-radius:0;box-shadow:none;aspect-ratio:16/9;max-height:92vh;background:none;-webkit-mask-image:linear-gradient(#0000,#000 20%,#000 88%,#0000);mask-image:linear-gradient(#0000,#000 20%,#000 88%,#0000)}.frame.on{-webkit-mask:none;mask:none;width:min(1400px,100% - 32px);margin:clamp(60px,6vw,96px) auto 0;border-radius:20px;max-height:84vh;background:#222a36}
+.frame .start{inset:auto 0 9%;background:none;padding:0 20px;text-shadow:0 1px 8px #0009}.frame .start span{background:#12151cd9;border-radius:99px;padding:5px 16px;text-shadow:none}.frame .start .btn{box-shadow:0 14px 34px -10px #000a}
+.pick{padding-inline:20px}.morning{background:linear-gradient(#eef3f2,#f3f1e9)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}.three figure{margin:0}.three .clip video{aspect-ratio:4/3.4}.three figcaption{padding:16px 4px 0}.three b{display:block;font-weight:600;font-size:22px}.three span{opacity:.8}.dot::before{content:"";display:inline-block;width:13px;height:13px;border-radius:50%;margin-inline-end:10px;background:currentColor}.dot.g::before{background:#1fa971}.dot.o::before{background:var(--wait)}.dot.v::before{background:#7f88d8}.three .g,.three .o,.three .v{color:inherit}
+
+@media(max-width:820px){.three{grid-template-columns:1fr;gap:34px}.frame{aspect-ratio:4/4.6}.frame.on{aspect-ratio:4/5}.demo{margin-top:10px}.clock{display:none}}
+
+
+.stage{position:relative;margin-top:44px;border-radius:22px;overflow:hidden;background:#222a36}.stage img{aspect-ratio:16/10;object-fit:cover;transition:opacity .3s}.cap{display:flex;gap:24px;justify-content:space-between;align-items:end;flex-wrap:wrap;padding:24px 28px;background:var(--plate);color:#fff}.cap h3{margin:0;font-size:26px;font-weight:600}.cap p{color:#b9bedb;margin-top:4px}.cap .btn{background:#fff;color:var(--ink)}.cap .btn:hover{background:#dfe3f5}
+.thumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:14px;padding-bottom:clamp(40px,5vw,70px)}.thumbs button{padding:0;border:3px solid #0000;border-radius:14px;overflow:hidden;background:none;cursor:pointer}.thumbs img{aspect-ratio:8/5;object-fit:cover}.thumbs [aria-pressed=true]{border-color:#fff}.thumbs button:hover{border-color:#ffffff99}
+@media(max-width:820px){.thumbs{grid-template-columns:repeat(3,1fr)}.cap{padding:18px 20px}}
+
+h1,h2{overflow-wrap:break-word}button,.btn,summary{touch-action:manipulation}.pick button,.copy,nav select,.thumbs button{min-height:44px}.copy{min-width:64px}
+@media(max-width:1100px){.three{gap:16px}.cap{padding:20px 22px}}
+@media(max-width:820px){.wrap{width:min(1240px,100% - 32px)}.hero{padding-top:20px}.hero h1{font-size:clamp(38px,12vw,64px)}.go .btn{flex:1 1 200px;text-align:center}.frame{aspect-ratio:auto;height:min(74svh,620px)}.frame.on{aspect-ratio:auto;height:min(80svh,680px);margin-top:20px}.frame .start{inset-block-end:6%}.frame .start span{text-align:center;line-height:1.35}.hour{padding:52px 0}.three{max-width:520px;margin-inline:auto}.cap .btn{flex:1 1 100%;text-align:center}.pick{justify-content:flex-start}.steps li{padding:18px}.facts{gap:26px;margin-top:28px}}
+@media(min-width:560px) and (max-width:820px){.three{grid-template-columns:1fr 1fr;max-width:none}.facts{grid-template-columns:1fr 1fr}}
+@media(max-height:520px) and (orientation:landscape){.hero h1{font-size:clamp(34px,6vw,52px)}.frame,.frame.on{height:92svh;max-height:none;aspect-ratio:auto}.clock{display:none}}
+</style>
+</head>
+<body>
+<div class="clock" aria-hidden="true"><i></i><span id="clock">08:30</span></div>
+<div class="sky"><div class="wrap">
+<nav><span class="logo">Agentloft</span><div><a class="gh" href="https://github.com/edensitko/agentloft">GitHub</a><select id="lang" aria-label="Language"></select></div></nav>
+<header class="hero"><h1 data-t="h1">Your agents have an office now</h1><p data-t="lead">Every Claude Code session becomes a person in a live 3D office. Look up and you know who is working, who is stuck, and who is waiting for you.</p>
+<div class="go"><a class="btn glow" id="cta" href="#install" data-t="cta">Download</a><button class="btn alt" id="play2" data-t="src">Play the live demo</button></div></header>
+</div><section class="demo" id="demo" aria-label="Live demo">
+<div class="frame" id="frame"><video class="loop" muted loop playsinline preload="none" data-film="hero" poster="images/v-hero-en.jpg" src="video/hero-en.mp4" aria-hidden="true"></video><img id="poster" class="sr" src="images/v-hero-en.jpg" width="1280" height="720" alt="A bright office seen from above, with people at their desks and labels that say what each one is doing"><div class="start"><button class="btn" id="play" data-t="play">Play the live demo</button><span data-t="heavy">The real office with made-up sessions, right here. About 15 MB.</span></div></div>
+<div class="pick" role="group" aria-label="Offices"><button data-o="startup" aria-pressed="true" data-t="o1">Startup loft</button><button data-o="campus" data-t="o2">Green campus</button><button data-o="studio" data-t="o3">Beach studio</button><button data-o="classic" data-t="o4">Classic firm</button><button data-o="night" data-t="o5">Night lab</button><button data-o="cabin" data-t="o6">Mountain retreat</button></div>
+</section>
+</div>
+<main>
+<section class="hour morning"><div class="wrap"><div class="time">09:05</div><h2 data-t="t1">Read the room in one look</h2>
+<div class="three"><figure><div class="clip tilt"><video class="loop" muted loop playsinline preload="none" poster="images/v-type-en.jpg" src="video/type-en.mp4" aria-label="A man types at his desk"></video></div><figcaption><b class="dot g" data-t="x1">Typing</b><span data-t="x2">The session is working. The label says on what.</span></figcaption></figure><figure><div class="clip tilt"><video class="loop" muted loop playsinline preload="none" data-film="wave" poster="images/v-wave-en.jpg" src="video/wave-en.mp4" aria-label="A woman stands up and waves"></video></div><figcaption><b class="dot o" data-t="x3">Waving</b><span data-t="x4">It stopped and needs you.</span></figcaption></figure><figure><div class="clip tilt"><video class="loop" muted loop playsinline preload="none" data-film="chat" poster="images/v-chat-en.jpg" src="video/chat-en.mp4" aria-label="Two people talk by the indoor garden"></video></div><figcaption><b class="dot v" data-t="x5">Off chatting</b><span data-t="x6">Nothing to do. Give it a task or leave it be.</span></figcaption></figure></div></div></section>
+<section class="hour dusk"><div class="wrap"><div class="time">18:40</div><h2 data-t="c1">Move the whole company to the beach</h2><p class="say" data-t="c2">Six complete offices, each in its own building. Change the rooms, the people, the furniture and the view, then walk around in it yourself.</p><div class="stage" id="stage"><img id="stageImg" src="images/office-studio.jpg" width="1400" height="875" loading="lazy" alt=""><div class="cap"><div><h3 id="stageName"></h3><p id="stageText"></p></div><button class="btn" id="tryOffice" data-t="st">Walk into this one</button></div></div><div class="thumbs" id="thumbs" role="group" aria-label="Buildings"></div></div></section>
+<section class="hour night"><canvas id="stars" aria-hidden="true"></canvas><div class="wrap"><div class="time">23:15</div><h2 data-t="d1">What happens here stays here</h2>
+<div class="facts"><div><b data-t="e2">Only watching</b><span data-t="e3">It reads what Claude Code already keeps on your computer, and sends nothing anywhere.</span></div><div><b data-t="e4">Careful with secrets</b><span data-t="e5">A command is never shown, only its description. Text that looks like a key is masked.</span></div><div><b data-t="e6">You hold the pen</b><span data-t="e7">Nothing in the office can answer a session or approve a permission for you.</span></div></div>
+
+<div class="install" id="install"><h2 data-t="f1">Download it and walk in</h2>
+<ol class="steps"><li><b data-t="i1">Download</b><div class="cmd"><code>git clone https://github.com/edensitko/agentloft.git</code><button class="copy" data-t="copy">Copy</button></div></li><li><b data-t="i2">Start it</b><div class="cmd"><code>cd agentloft; npm install; npm start</code><button class="copy" data-t="copy2">Copy</button></div></li><li><b data-t="i3">Walk in</b><p data-t="i4">Open localhost:4455 on the same computer and pick your office. This site has no login and no way into anyone's office, yours included.</p></li></ol>
+<p class="small" data-t="f2">macOS, or Windows and Linux (experimental). You need Node.js 22 or newer, and Claude Code.</p></div>
+<div class="faq"><h2 data-t="q0">Before you move in</h2>
+<details><summary data-t="q1">Does it use my Claude tokens?</summary><p data-t="r1">No. It reads files that are already on your computer and never talks to a model.</p></details>
+<details><summary data-t="q3">Does it work on Windows or Linux?</summary><p data-t="r3">Yes, as an experiment. The server is tested on both, but the notifications and the links to the Claude app have only been used on a Mac so far.</p></details>
+</div>
+<footer data-t="g1">MIT licence. The people are from the Microsoft Rocketbox library. Not made by or affiliated with Anthropic.</footer></div></section>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const LANGS={en:'English',es:'Español',fr:'Français',de:'Deutsch',pt:'Português',ru:'Русский',he:'עברית',ar:'العربية'},RTL=['he','ar'];
+const nodes=[...document.querySelectorAll('[data-t]')],pick=$('#lang');let TX=Object.fromEntries(nodes.map(n=>[n.dataset.t,n.textContent])),EN={...TX,b_startup:'One open floor, with a few rooms around it.',b_campus:'Fifteen departments around an indoor garden.',b_studio:'Long and narrow, with the sea behind it.',b_classic:'Rows of closed rooms and quiet corridors.',b_night:'Everything turns around one dark centre.',b_cabin:'Small and warm, for one person and a few agents.'};TX={...EN};
+let office='startup',open=false;
+function load(){let f=$('#frame iframe');if(!f){f=document.createElement('iframe');f.title='Agentloft, live demo';f.allow='fullscreen';$('#frame').classList.add('on');$('#frame').replaceChildren(f)}f.src='demo/'+'?demo&embed&office='+office+'&lang='+document.documentElement.lang;open=true}
+$('#play').onclick=load;$('#play2').onclick=()=>{if(!open)load();$('#demo').scrollIntoView({behavior:'smooth'})};
+document.querySelectorAll('.pick button').forEach(b=>b.onclick=()=>{office=b.dataset.o;document.querySelectorAll('.pick button').forEach(x=>x.setAttribute('aria-pressed',x===b));load()});
+async function show(l){let d={};if(l!=='en')try{d=await(await fetch('lang/'+l+'.json')).json()}catch{l='en'}TX={...EN,...d};const r=document.documentElement;r.lang=l;r.dir=RTL.includes(l)?'rtl':'ltr';for(const n of nodes)n.textContent=TX[n.dataset.t]??n.textContent;pick.value=l;split();films(l==='he'?'he':'en');if(open)load()}
+const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+// the headline arrives letter by letter; screen readers get it whole
+let played=false;function split(){const h=$('h1');h.classList.toggle('still',played);played=true;const text=TX.h1??h.textContent;if(document.documentElement.lang==='ar'){h.removeAttribute('aria-label');h.textContent=text;return}h.setAttribute('aria-label',text);let i=0;h.replaceChildren(...text.split(' ').flatMap((w,k)=>{const s=document.createElement('span');s.className='w';s.ariaHidden='true';s.append(...[...w].map(c=>{const e=document.createElement('span');e.className='c';e.style.setProperty('--i',i++);e.textContent=c;return e}));return k?[' ',s]:[s]}))}
+// the clock follows the page
+function day(){const m=Math.max(1,document.documentElement.scrollHeight-innerHeight),k=Math.min(1,Math.max(0,scrollY/m)),t=Math.round(510+k*885),n=k>.72;$('#clock').textContent=String(t/60|0).padStart(2,'0')+':'+String(t%60).padStart(2,'0');document.documentElement.style.setProperty('--orb',n?'#dfe4ff':k>.5?'#ff9a4d':'#ffd76a');}
+addEventListener('scroll',day,{passive:true});addEventListener('resize',()=>{day();stars()});
+function stars(){const c=$('#stars'),w=c.clientWidth,h=c.clientHeight,g=c.getContext('2d');c.width=w;c.height=h;let s=7;const r=()=>(s=(s*16807)%2147483647)/2147483647;for(let i=0;i<w*h/9000;i++){const y=h*.14+r()*h*.8;g.globalAlpha=.15+r()*.6;g.fillStyle='#fff';g.beginPath();g.arc(r()*w,y,r()*1.3+.3,0,7);g.fill()}}
+// films play only while they are on screen
+const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting&&!calm)v.play().catch(()=>{});else v.pause()}),{rootMargin:'120px'});document.querySelectorAll('video.loop').forEach(v=>io.observe(v));
+if(!calm&&matchMedia('(hover:hover)').matches){document.querySelectorAll('.tilt:not(.full)').forEach(e=>{e.onpointermove=ev=>{const b=e.getBoundingClientRect(),x=(ev.clientX-b.left)/b.width-.5,y=(ev.clientY-b.top)/b.height-.5;e.style.setProperty('--ry',x*7+'deg');e.style.setProperty('--rx',-y*6+'deg')};e.onpointerleave=()=>{e.style.setProperty('--rx','0deg');e.style.setProperty('--ry','0deg')}});}
+document.querySelectorAll('.copy').forEach(b=>b.onclick=()=>navigator.clipboard.writeText(b.previousElementSibling.textContent).then(()=>{const o=b.textContent;b.textContent='✓';setTimeout(()=>b.textContent=o,1400)}));
+function films(l){document.querySelectorAll('video[data-film]').forEach(v=>{const n=v.dataset.film,u='video/'+n+'-'+l+'.mp4';if(v.getAttribute('src')===u)return;const on=!v.paused;v.poster='images/v-'+n+'-'+l+'.jpg';v.src=u;if(on)v.play().catch(()=>{})});gallery()}
+// six buildings
+const B={startup:'o1',campus:'o2',studio:'o3',classic:'o4',night:'o5',cabin:'o6'};let built='studio';
+function gallery(){const name=k=>TX[B[k]];$('#stageName').textContent=name(built);$('#stageText').textContent=TX['b_'+built];$('#stageImg').alt=name(built);const t=$('#thumbs');if(!t.children.length)t.append(...Object.keys(B).map(k=>{const b=document.createElement('button'),i=new Image();i.src='images/office-'+k+'.jpg';i.loading='lazy';i.alt='';b.dataset.k=k;b.append(i);b.onclick=()=>{built=k;const g=$('#stageImg');g.style.opacity=0;setTimeout(()=>{g.src=i.src;g.decode().catch(()=>{}).then(()=>g.style.opacity=1)},calm?0:200);gallery()};return b}));for(const b of t.children){b.setAttribute('aria-label',name(b.dataset.k));b.setAttribute('aria-pressed',b.dataset.k===built)}}
+$('#tryOffice').onclick=()=>{document.querySelector('.pick [data-o='+built+']').click();$('#demo').scrollIntoView({behavior:calm?'auto':'smooth'})};
+TX.h1||=$('h1').textContent;split();day();gallery();addEventListener('load',stars);
+pick.append(...Object.entries(LANGS).map(([k,n])=>new Option(n,k)));pick.onchange=()=>{history.replaceState(null,'','#'+pick.value);show(pick.value)};const first=location.hash.slice(1),mine=(navigator.language||'en').slice(0,2).replace('iw','he');const start=LANGS[first]?first:LANGS[mine]?mine:'en';if(start!=='en')show(start);else pick.value='en';
+</script>
+</body>
+</html>

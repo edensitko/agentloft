@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+# everything personal stays on your machine: your company, your design, your saved templates
+data/
+# local tooling and working notes
+.claude/
+docs/superpowers/
+*.plist
+_site/

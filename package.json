@@ -1,0 +1,25 @@
+{
+  "name": "agentloft",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  },
+  "description": "A live 3D office that shows your Claude Code sessions and agents at work",
+  "license": "MIT",
+  "author": "Eden Sitkovetsky",
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "agents",
+    "dashboard",
+    "threejs"
+  ]
+}
